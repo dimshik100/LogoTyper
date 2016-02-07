@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LogoTyper</title>
+
+	<style>
+		.output {
+			font-size: 40px;
+			line-height: 40px;
+			text-transform: uppercase;
+		}
+
+		span {
+			width: 32px;
+			height: 32px;
+		}
+
+		a img {
+			border: 0;
+		}
+	</style>
+
+
+	<script>
+		var letterImages = {
+			"a": {
+				"img": "images/amazon.png",
+				"link": "http://www.amazon.com"
+			},
+			"b": {
+				"img": "images/blogger.png",
+				"link": "http://www.blogger.com"
+			},
+			"c": {
+				"img": "",
+				"link": ""
+			},
+			"d": {
+				"img": "",
+				"link": ""
+			},
+			"e": {
+				"img": "images/etsy.png",
+				"link": "http://www.etsy.com"
+			},
+			"f": {
+				"img": "images/facebook.png",
+				"link": "http://www.facebook.com"
+			},
+			"g": {
+				"img": "images/google.png",
+				"link": "http://www.google.com"
+			},
+			"h": {
+				"img": "",
+				"link": ""
+			},
+			"i": {
+				"img": "",
+				"link": ""
+			},
+			"j": {
+				"img": "",
+				"link": ""
+			},
+			"k": {
+				"img": "images/kickstarter.png",
+				"link": "http://www.kickstarter.com"
+			},
+			"l": {
+				"img": "images/lanyrd.png",
+				"link": "http://www.lanyrd.com"
+			},
+			"m": {
+				"img": "",
+				"link": ""
+			},
+			"n": {
+				"img": "",
+				"link": ""
+			},
+			"o": {
+				"img": "",
+				"link": ""
+			},
+			"p": {
+				"img": "images/pintrest.png",
+				"link": "http://www.pintrest.com"
+			},
+			"q": {
+				"img": "",
+				"link": ""
+			},
+			"r": {
+				"img": "",
+				"link": ""
+			},
+			"s": {
+				"img": "images/skype.png",
+				"link": "http://www.skype.com"
+			},
+			"t": {
+				"img": "images/tumblr.png",
+				"link": "http://www.tumblr.com"
+			},
+			"u": {
+				"img": "",
+				"link": ""
+			},
+			"v": {
+				"img": "images/vimeo.png",
+				"link": "http://www.vimeo.com"
+			},
+			"w": {
+				"img": "images/wikipedia.png",
+				"link": "http://www.wikipedia.com"
+			},
+			"x": {
+				"img": "",
+				"link": ""
+			},
+			"y": {
+				"img": "images/yahoo.png",
+				"link": "http://www.yahoo.com"
+			},
+			"z": {
+				"img": "images/zerply.png",
+				"link": "http://www.zerply.com"
+			}
+		}
+	</script>
+
+
+	<script src="js/jquery-1.9.1.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+
+
+	<textarea rows="4" cols="50">The quick brown fox jumps over the lazy dog</textarea>
+
+
+	<div class="output"></div>
+
+
+	<script>
+		function getIndicesOf(searchStr, str, caseSensitive) {
+			var startIndex = 0,
+				searchStrLen = searchStr.length;
+			var index, indices = [];
+			if (!caseSensitive) {
+				str = str.toLowerCase();
+				searchStr = searchStr.toLowerCase();
+			}
+			while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+				indices.push(index);
+				startIndex = index + searchStrLen;
+			}
+			return indices;
+		}
+
+
+		function registerEvents() {
+
+			$('textarea').keyup(function () {
+				updateText();
+			});
+
+		}
+
+		// Globals
+
+
+		// end Globals
+
+
+		$(document).ready(function () {
+
+			registerEvents();
+
+			init();
+
+		});
+
+		function init() {
+
+			updateText();
+
+		}
+
+
+
+		function updateText() {
+
+
+			var html = new Array;
+
+			var text = $('textarea').val();
+
+			var keys = Object.keys(letterImages);
+
+
+
+			for (var m = 0; m < text.length; m++) {
+				html[m] = text[m];
+			}
+
+
+
+			for (var i = 0; i < keys.length; i++) {
+
+
+				var indices = getIndicesOf(keys[i], text, false);
+
+				for (var j = 0; j < indices.length; j++) {
+
+					if (letterImages[keys[i]].img != "") {
+						html[indices[j]] = '<span><a target="_blank" href="' + letterImages[keys[i]].link + '" title="' + letterImages[keys[i]].link + '"><img src="' + letterImages[keys[i]].img + '"></a></span>';
+					} else {
+						html[indices[j]] = keys[i];
+					}
+				}
+
+			}
+
+
+
+			$('.output').html(html);
+
+		}
+	</script>
+
+</body>
+
+</html>

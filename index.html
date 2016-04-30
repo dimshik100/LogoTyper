@@ -130,6 +130,10 @@
 			"z": {
 				"img": "images/zerply.png",
 				"link": "http://www.zerply.com"
+			},
+			"\n" : {
+				"img":"",
+				"link":""
 			}
 		}
 	</script>
@@ -196,8 +200,6 @@
 
 		}
 
-
-
 		function updateText() {
 
 
@@ -207,31 +209,33 @@
 
 			var keys = Object.keys(letterImages);
 
-
-
 			for (var m = 0; m < text.length; m++) {
 				html[m] = text[m];
 			}
 
-
-
 			for (var i = 0; i < keys.length; i++) {
 
-
 				var indices = getIndicesOf(keys[i], text, false);
+
+				//console.log(indices);
 
 				for (var j = 0; j < indices.length; j++) {
 
 					if (letterImages[keys[i]].img != "") {
 						html[indices[j]] = '<span><a target="_blank" href="' + letterImages[keys[i]].link + '" title="' + letterImages[keys[i]].link + '"><img src="' + letterImages[keys[i]].img + '"></a></span>';
 					} else {
-						html[indices[j]] = keys[i];
+						console.log(keys[i]);
+
+						if (keys[i] == "\n")
+							html[indices[j]] = '<span><br /></span>';
+						else
+							html[indices[j]] = keys[i];
 					}
 				}
 
 			}
 
-
+			console.log(html);
 
 			$('.output').html(html);
 
